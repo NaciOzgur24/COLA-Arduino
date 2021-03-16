@@ -1,3 +1,8 @@
+/*
+COLA Arduino
+IMU Code
+*/
+
 #include <Wire.h>
 #define NANO_ADDRESS 0x46
 // Extra pins for use with the level shifter
