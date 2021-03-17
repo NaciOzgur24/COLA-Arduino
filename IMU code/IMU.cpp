@@ -25,7 +25,7 @@ void setup()
   Wire.endTransmission();
   // Prepares the sensor to send data out
   Wire.beginTransmission(NANO_ADDRESS);
-  Wire.write(0x43); // (0x01) Reading tared orientation as Euler Angles
+  Wire.write(0x00); // (0x01) Reading tared orientation as Euler Angles
   Wire.endTransmission();
 
   // Request 4 bytes of data from the sensor
