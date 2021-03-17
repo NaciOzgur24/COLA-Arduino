@@ -25,7 +25,7 @@ void loop()
     delay(15);
   }
   delay(1000);
-  for(angle = 120; angle>=1; angle-=5) // command to move from 180 degrees to 0 degrees 
+  for(angle = 120; angle >= 1; angle -= 5) // command to move from 180 degrees to 0 degrees 
   {
     servo_test.write(angle); //command to rotate the servo to the specified angle
     delay(5);
