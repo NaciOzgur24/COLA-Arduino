@@ -3,7 +3,8 @@ COLA Arduino
 IMU Code
 */
 
-#include <Wire.h>
+#include <Wire.h> // If we're using I2C protocol
+// #include <SPI.h> "Only if we end up using the SPI protocol"
 #define NANO_ADDRESS 0x46
 // Extra pins for use with the level shifter
 #define Vout 9
