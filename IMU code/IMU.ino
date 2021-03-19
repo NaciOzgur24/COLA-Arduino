@@ -1,4 +1,4 @@
-/*
+/* RS232
 COLA Arduino
 IMU Code (***IF*** we use SPI protocol)
 */
@@ -8,10 +8,10 @@ IMU Code (***IF*** we use SPI protocol)
 //Set Slave Select Pin
 //MOSI, MISO, CLK are handeled automatically
 
-const int CSN = 4;
-const int SO = 74;
-const int SI = 75;
-const int CLK = 76 ;
+const int CSN = 2; //4
+const int SO = 3; //OG const int SO = 74;
+const int SI = 4; //75
+const int CLK = 5; //76
 
 // Needed to convert the bytes from SPI to float
 union u_types {
@@ -34,7 +34,7 @@ void setup()
   SPI.begin();
   SPI.setBitOrder(MSBFIRST);
   SPI.setDataMode(SPI_MODE0);
-  Serial.begin(9600);
+  Serial.begin(115200); //OG 9600
 }
 
 //function to transfer commands through SPI
