@@ -1,6 +1,6 @@
 /*
-COLA Arduino
-IMU Code
+COLA Arduino (Manufacterer Arduino NANO example)
+IMU Code (With the NANO not for the UNO Rev3)
 */
 
 #include <Wire.h> // If we're using I2C protocol

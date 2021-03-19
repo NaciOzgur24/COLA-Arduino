@@ -1,5 +1,4 @@
 /*
-COLA Arduino
 (GPS) Getting the Position
 Online example: https://github.com/sparkfun/SparkFun_u-blox_GNSS_Arduino_Library/blob/master/examples/Example5_SpeedHeadingPrecision/Example5_SpeedHeadingPrecision.ino
 */
