@@ -41,17 +41,17 @@ void loop()
     Serial.print(latitude);
 
     long longitude = myGNSS.getLongitude();
-    Serial.print(F(" Long: "));
+    Serial.print(F("Long: "));
     Serial.print(longitude);
-    Serial.print(F(" (degrees * 10^-7)"));
+    Serial.print(F("(degrees*10^-7)"));
 
     long altitude = myGNSS.getAltitude();
-    Serial.print(F(" Alt: "));
+    Serial.print(F("Alt: "));
     Serial.print(altitude);
-    Serial.print(F(" (mm)"));
+    Serial.print(F("(mm)"));
 
     byte SIV = myGNSS.getSIV();
-    Serial.print(F(" SIV: "));
+    Serial.print(F("SIV: "));
     Serial.print(SIV);
 
     Serial.println();
