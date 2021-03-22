@@ -1,4 +1,4 @@
-// C++ code
+/*/ C++ code
     extern "C" void f(int); // one way
     extern "C" {    // another way
         int g(double);
@@ -10,3 +10,10 @@
         int ii = g(d);
         double dd = h();
     }
+*/
+#ifndef SOMECODE_H_
+#define SOMECODE_H_
+
+ void foo();
+
+ #endif
