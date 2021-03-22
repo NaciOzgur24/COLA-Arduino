@@ -3,6 +3,7 @@ COLA Arduino
 main code
 */
 
+#include "call_C_code.c"
 
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
