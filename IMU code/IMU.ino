@@ -1,6 +1,6 @@
-/* RS232
+/*
 COLA Arduino
-IMU Code (***IF*** we use SPI protocol)
+IMU Code (RS232)
 */
 
 #include <SPI.h>

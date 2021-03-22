@@ -1,10 +1,9 @@
 /*
 COLA Arduino
-(GPS) Getting the Position
+(GPS) Getting the Position (using I2C Protocol)
 */
 
 #include <Wire.h> //Needed for I2C to GNSS
-
 #include <SparkFun_u-blox_GNSS_Arduino_Library.h>
 SFE_UBLOX_GNSS myGNSS;
 
@@ -43,7 +42,7 @@ void loop()
     long longitude = myGNSS.getLongitude();
     Serial.print(F("Long: "));
     Serial.print(longitude);
-    Serial.print(F("(degrees*10^-7)"));
+    Serial.print(F("(degrees * 10^-7)"));
 
     long altitude = myGNSS.getAltitude();
     Serial.print(F("Alt: "));
