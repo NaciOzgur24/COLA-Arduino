@@ -10,7 +10,7 @@ double colaPIDp() { // Call this function every time you want the pitch PID to u
     	return gPitch // The function returns the pitch gymbal angle.
 	}
 
-void main() { // Below code should be integrated into the main loop program of the Arduino
+void main() { // Below code should be integrated into the main program of the Arduino
 	double xdot = 0; // Velocity in the x axis (In practice theses are the velocities (either x or y) that the system derives from sensor data)
 	double ydot = 0; // Velocity in the y axis
 	double target = 0; // Desired velocity value, should always be zero
