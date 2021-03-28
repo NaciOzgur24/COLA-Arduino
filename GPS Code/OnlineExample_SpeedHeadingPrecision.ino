@@ -38,13 +38,13 @@ void loop()
     Serial.print(latitude);
 
     long longitude = myGNSS.getLongitude();
-    Serial.print(F(" Long: "));
+    Serial.print(F("Long: "));
     Serial.print(longitude);
 
     long speed = myGNSS.getGroundSpeed();
-    Serial.print(F(" Speed: "));
+    Serial.print(F("Speed: "));
     Serial.print(speed);
-    Serial.print(F(" (mm/s)"));
+    Serial.print(F("(mm/s)"));
 
     long heading = myGNSS.getHeading();
     Serial.print(F(" Heading: "));
