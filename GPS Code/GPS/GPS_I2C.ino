@@ -7,6 +7,9 @@ COLA Arduino
 #include <SparkFun_u-blox_GNSS_Arduino_Library.h>
 SFE_UBLOX_GNSS myGNSS;
 
+#ifndef GPS_I2C_h
+#define GPS_I2C_h
+
 long lastTime = 0; //Simple local timer. Limits amount if I2C traffic to u-blox module.
 int armed = 0; //Wait for the lander to go above 25 meters. (This is for the Rocket_Ignition.ino code)
 int current_alt = 0;
