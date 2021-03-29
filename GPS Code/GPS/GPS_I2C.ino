@@ -8,6 +8,8 @@ COLA Arduino
 SFE_UBLOX_GNSS myGNSS;
 
 long lastTime = 0; //Simple local timer. Limits amount if I2C traffic to u-blox module.
+int armed = 0; //Wait for the lander to go above 25 meters. (This is for the Rocket_Ignition.ino code)
+int current_alt = 0;
 
 void setup()
 {
@@ -34,25 +36,17 @@ void loop()
   if (millis() - lastTime > 1000)
   {
     lastTime = millis(); //Update the timer
-    
+    // *** Currently have it printing but NEED to change it after the testing phase ***
     long latitude = myGNSS.getLatitude();
-    Serial.print(F("Lat: "));
     Serial.print(latitude);
 
-    long longitude = myGNSS.getLongitude();
-    Serial.print(F("Long: "));
-    Serial.print(longitude);
-    Serial.print(F("(degrees * 10^-7)"));
+    long longitude = myGNSS.getLongitude(); // {degrees*10^-7}
 
-    long altitude = myGNSS.getAltitude();
-    Serial.print(F("Alt: "));
-    Serial.print(altitude);
-    Serial.print(F("(mm)"));
+    long altitude = myGNSS.getAltitude(); // {mm}
 
-    byte SIV = myGNSS.getSIV();
-    Serial.print(F("SIV: "));
-    Serial.print(SIV);
-
-    Serial.println();
+    if (altitude >= 25000) //COLA lander initially went above 25 meters
+    {
+      armed = 1;
+    }
   }
 }
