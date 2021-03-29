@@ -5,6 +5,8 @@
 #include <iostream>
 #include <cmath>
 
+// Inner Gimbal is Pitch
+// Outer Gimbal is Roll
 
 using namespace std;
 
@@ -43,9 +45,9 @@ int main()
 {
 	double InnerGimbal = gimbal2servo(27.5, 37.9, 11.9, -37.65, -35, 10);
 	// Inner Gimbal Deflection of 10 degrees
-	cout << InnerGimbal << endl;
+	cout << InnerGimbal << endl; // Inner Gimbal is Pitch
 
 	double OuterGimbal = gimbal2servo(25.75, 36.3, 11.9, 36.2, -11, 10);
 	// Outer Gimbal Deflection of 10 degrees
-	cout << OuterGimbal << endl;
+	cout << OuterGimbal << endl; // Outer Gimbal is Roll
 }
