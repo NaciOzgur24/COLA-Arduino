@@ -11,6 +11,8 @@ Servo servo_x; // Connect to the servo in x-axis
 Servo servo_y; // y-axis
 
 int angle = 0;
+int InnerGimbal = 0; // Inner Gimbal is Pitch
+int OuterGimbal = 0; // Outer Gimbal is Roll
 
 //float PIDYaw = 0;
 double PIDPitch = 0;
