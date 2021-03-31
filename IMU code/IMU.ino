@@ -1,4 +1,4 @@
-/*
+/* Still have to change from SPI protocol to USB 2.0
 COLA Arduino
 IMU Code (RS232)
 */
@@ -50,7 +50,6 @@ byte transferByte(byte byteToWrite)
   digitalWrite(CSN,HIGH);
 
   return Result;
-}
 
 //function to swap endian
 void endianSwap(byte temp[4])
