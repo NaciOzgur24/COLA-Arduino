@@ -2,6 +2,7 @@
 COLA Arduino
 Servo code reading the PID outputs and controls it
 */
+// 5V power 333hz update signal
 // 73% duty cycle
 // 29% duty cycle
 
