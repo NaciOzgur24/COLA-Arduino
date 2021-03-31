@@ -2,6 +2,8 @@
 COLA Arduino
 Servo code reading the PID outputs and controls it
 */
+// 73% duty cycle
+// 29% duty cycle
 
 #include "Wire.h"
 #include <Servo.h>
