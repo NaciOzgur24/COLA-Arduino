@@ -1,6 +1,6 @@
 /* Still have to change from SPI protocol to USB 2.0
 COLA Arduino
-IMU Code (RS232)
+IMU Code (USB 2.0 Protocol)
 */
 
 #include <SPI.h>
@@ -13,7 +13,7 @@ const int SO = 3; //OG const int SO = 74;
 const int SI = 4; //75
 const int CLK = 5; //76
 
-// Needed to convert the bytes from SPI to float
+// Needed to convert the bytes from SPI to float (***NEED TO UPDATE THIS BECAUSE WE'RE GETTING QUATTERNION INSTEAD OF EULER ANGLES***)
 union u_types {
     byte b[4];
     float fval;
@@ -21,11 +21,11 @@ union u_types {
 
 void setup()
 {
-  //Set Pin Modes
+  //Seting Pin Modes
   pinMode(CSN, OUTPUT);
-  pinMode(SI, OUTPUT);
-  pinMode(SO, INPUT);
-  pinMode(CLK, OUTPUT);
+  pinMode(SI, OUTPUT); // Input
+  pinMode(SO, INPUT); // Output
+  pinMode(CLK, OUTPUT); // Clock
 
   //Set Slave Select High to Start i.e disable chip
   digitalWrite(CSN, HIGH);
@@ -73,9 +73,9 @@ void loop()
   result = transferByte(0xF6);
   Serial.print("Send start of packet. Result: "),Serial.println(result);
 
-  // Send command (tared euler angles)
-  result = transferByte(0x01);
-  Serial.print("Send commmand 0x01. Result: "),Serial.println(result);
+  // Send command (Tared Quaternion)
+  result = transferByte(0x00);
+  Serial.print("Send commmand 0x00. Result: "),Serial.println(result);
 
   // Get status of device:
   result = transferByte(0xFF);
@@ -88,16 +88,16 @@ void loop()
   }
 
   // Get the 12 bytes of return data from the device: (I think we need to get 12Bytes of data please double check if im wrong)
-  for (int ii=0; ii<3; ii++)
+  for (int ii = 0; ii < 3; ii++)
   {
-    for (int jj=0; jj<4; jj++)
+    for (int jj = 0; jj < 4; jj++)
     {
       data[ii].b[jj] = transferByte(0xFF);
       //delay(1);
     }
   }
 
-  for( int mm=0; mm<3; mm++)
+  for(int mm = 0; mm < 3; mm++)
   {
     endianSwap(data[mm].b);
   }
