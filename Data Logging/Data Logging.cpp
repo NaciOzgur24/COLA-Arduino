@@ -3,4 +3,3 @@ COLA Arduino
 Data Logging code
 */
 
-#include SPI.h
