@@ -2,13 +2,18 @@
 COLA Arduino
 Servo code reading the PID outputs and controls it
 */
+
 // 5V power 333hz update signal
 // 73% duty cycle
 // 29% duty cycle
 
+#ifndef Servo_control_h
+#define Servo_control_h
+
 #include "Wire.h"
 #include <Servo.h>
 #include "Gimbal2Servo_2.cpp" // The Gimbal to Servo code ***Pretty sure we need to call a .h file instead of .cpp***
+
 
 Servo servo_x; // Connect to the servo in x-axis
 Servo servo_y; // y-axis
@@ -39,14 +44,12 @@ void setup()
 		servo_y.write(angle); // y-axis
 		delay(500);
 	}
-	delay(100);
 	for (angle = 60; angle >= -60; angle -= 1) // command to move from 60 degrees to -60 degrees 
 	{
 		servo_x.write(angle); //command to rotate the servo to the specified angle
 		servo_y.write(angle); //command to rotate the servo to the specified angle
 		delay(500);
 	}
-	delay(100);
 }
 
 void loop()
