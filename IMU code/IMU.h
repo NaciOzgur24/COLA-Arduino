@@ -8,20 +8,18 @@ IMU Code (Asynchronys Protocol)
 
 #include <SoftwareSerial.h>
 
-SoftwareSerial mySerial(2, 3);
-
 
 void setup()
 {
   //pinMode(0, INPUT_PULLUP); // set push button pin as input
   //pinMode(1, OUTPUT); // set LED pin as output
-  SoftwareSerial mySerial(0, 1);
+  SoftwareSerial mySerial(0, 1); // Rx, Tx
   //digitalWrite(13, LOW); // Low Voltage on Pin 13
   Serial.begin(115200); // Initialize UART with baud rate of 115200 bps
   
   //pinMode(15, INPUT_PULLUP); // set push button pin as input
   //pinMode(14, OUTPUT); // set LED pin as output
-  SoftwareSerial mySerial(15, 14);
+  SoftwareSerial mySerial1(15, 14); // Rx, Tx
   //digitalWrite(12, LOW); // Low Voltage on Pin 12
   Serial1.begin(115200); // Initialize UART with baud rate of 115200 bps
 }
@@ -31,9 +29,6 @@ void loop()
   if (Serial.available())
   {
     char data_rcvd = Serial.read(); // Read one byte from serial buffer and save to data_rcvd
-
-    Serial.print();
-
     if (data_rcvd == '1') digitalWrite(13, HIGH); // High Voltage
     if (data_rcvd == '0') digitalWrite(13, LOW);  // Low Voltage
   }
@@ -59,9 +54,6 @@ void loop()
     result = transferByte(0xFF);
     Serial.print("Status of device. Result: "),Serial.println(result);
   }
-
-  Serial.print("fval 1:"), Serial.println(data[0].fval);
-  Serial.print("fval 2:"), Serial.println(data[1].fval);
-  Serial.print("fval 3:"), Serial.println(data[2].fval);
-  //delay(1000);
 }
+
+#endif

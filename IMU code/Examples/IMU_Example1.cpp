@@ -11,7 +11,7 @@ IMU example code
 
 void setup()
 {
-  Serial.begin(19200); // Initialize Serial communication
+  Serial.begin(115200); // Baud rate of the Serial
   pinMode(OE, OUTPUT);
   digitalWrite(OE, HIGH);
   pinMode(Vout, OUTPUT);

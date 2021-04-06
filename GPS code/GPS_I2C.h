@@ -16,13 +16,13 @@ void setup()
 {
   Serial.begin(115200);
   while (!Serial); //Wait for user to open terminal
-  Serial.println("SparkFun u-blox Example");
+  Serial.println("SparkFun u-blox");
 
   Wire.begin();
 
   if (myGNSS.begin() == false) //Connect to the u-blox module using Wire port
   {
-    Serial.println(F("u-blox GNSS not detected at default I2C address. Please check wiring. Freezing."));
+    Serial.println(F("u-blox GNSS not detected through I2C."));
     while (1);
   }
 
@@ -41,11 +41,13 @@ void loop()
       lastTime = millis(); //Update the timer
       // *** Currently have it printing but NEED to change it after the testing phase ***
       long latitude = myGNSS.getLatitude();
-      // Serial.print(latitude);
+      Serial.print(latitude);
 
       long longitude = myGNSS.getLongitude(); // {degrees*10^-7}
+      Serial.print(longitude);
 
       long altitude = myGNSS.getAltitude(); // {mm}
+      Serial.print(altitude);
 
       if (altitude >= 25000) //COLA lander initially went above 25 meters
       {
@@ -55,3 +57,6 @@ void loop()
     }
   }
 }
+
+
+#endif

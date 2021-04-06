@@ -18,15 +18,19 @@ void setup()
 
 void loop()
 {
+    long altitude = gps_location(long altitude);
     int armed = gps_location(int armed);
     while (ignition_condition == 0 && armed == 1)
     {
-        if (altitude() /*CHANGE*/ == 11000) // When COLA is 11 meters off the ground
+        if (altitude == 11000) // When COLA is 11 meters off the ground
         {
             digitalWrite(13, HIGH); // Sets the digital pin 13 on (Sends high Voltage to the igniter to light it)
-            delay(2000); // Waits 2 seconds after the high voltage is on
+            delay(1000); // Waits 2 seconds after the high voltage is on
             digitalWrite(13, LOW);  // Sets the digital pin 13 off (Turns off the high Voltage)
             ignition_condition = 1;
         }
     }
 }
+
+
+#endif

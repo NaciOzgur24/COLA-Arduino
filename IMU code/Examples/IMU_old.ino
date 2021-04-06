@@ -86,24 +86,4 @@ void loop()
     result = transferByte(0xFF);
     Serial.print("Status of device. Result: "),Serial.println(result);
   }
-
-  // Get the 12 bytes of return data from the device: (I think we need to get 12Bytes of data please double check if im wrong)
-  for (int ii = 0; ii < 3; ii++)
-  {
-    for (int jj = 0; jj < 4; jj++)
-    {
-      data[ii].b[jj] = transferByte(0xFF);
-      //delay(1);
-    }
-  }
-
-  for(int mm = 0; mm < 3; mm++)
-  {
-    endianSwap(data[mm].b);
-  }
-
-  Serial.print("fval 1:"), Serial.println(data[0].fval);
-  Serial.print("fval 2:"), Serial.println(data[1].fval);
-  Serial.print("fval 3:"), Serial.println(data[2].fval);
-  //delay(1000);
 }
