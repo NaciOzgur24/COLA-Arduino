@@ -3,8 +3,8 @@ COLA Arduino
 Data Logging code (USB)
 */
 
-#ifndef Data_Logging_idfk_h
-#define Data_Logging_idfk_h
+#ifndef Idea_3_h
+#define Idea_3_h
 
 #include <SoftwareSerial.h>
 #include "IMU.h"
