@@ -7,12 +7,13 @@ Servo code reading the PID outputs and controls it
 // 73% duty cycle
 // 29% duty cycle
 
-#ifndef Servo_control_h
-#define Servo_control_h
+#ifndef Servo_Control_h
+#define Servo_Control_h
 
 #include "Wire.h"
 #include <Servo.h>
 #include "Gimbal2Servo_2.cpp" // The Gimbal to Servo code ***Pretty sure we need to call a .h file instead of .cpp***
+
 
 Servo servo_x; // Connect to the servo in x-axis
 Servo servo_y; // y-axis
