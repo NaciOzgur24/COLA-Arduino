@@ -1,8 +1,8 @@
-//  ***    ***   *        *
-// *   *  *   *  *       * *
-// *      *   *  *       ***
-// *   *  *   *  *      *   *
-//  ***    ***   *****  *   *
+//  ***    ***   *        *      
+// *   *  *   *  *       * *     
+// *      *   *  *       ***     
+// *   *  *   *  *      *   *    
+//  ***    ***   *****  *   *    
 
 /* 
 
@@ -56,7 +56,7 @@ double gimbal2servo(double l1, double l2, double l3, double pos1, double pos2, d
 	return servoangle;
 }
 
-void processAccelGyro()
+void processAccelGyro(double OuterGymbal,double InnerGymbal)
 {
 
 	/*/ Get INT_STATUS byte
@@ -70,11 +70,10 @@ void processAccelGyro()
 	PIDRoll = ypr[ROLL] * 180 / M_PI;
 	*/
 
-	PIDPitch = colaPIDp();
-	PIDRoll = colaPIDr();
 
-	servo_x.write(-PIDPitch + 90);
-	servo_y.write(PIDRoll + 90);
+
+	servo_x.write(-Innergymbal + 90);
+	servo_y.write(OuterGymbal + 90);
 	delay(100);
 }
 
@@ -137,7 +136,7 @@ void main() {
         int armed = gps_location(int armed);
         while (ignition_condition == 0 && armed == 1)
         {
-            if (altitude == 11000) // When COLA is 11 meters off the ground
+            if (altitude <= 11000) // When COLA is 11 meters off the ground
             {
                 digitalWrite(13, HIGH); // Sets the digital pin 13 on (Sends high Voltage to the igniter to light it)
                 delay(1000); // Waits 2 seconds after the high voltage is on
@@ -147,6 +146,8 @@ void main() {
         }
 
         //SERVO
-        processAccelGyro();
+        InnerGimbal = gimbal2servo(27.5, 37.9, 11.9, -37.65, -35, gPitch);
+        OuterGimbal = gimbal2servo(25.75, 36.3, 11.9, 36.2, -11, gRoll);
+        processAccelGyro(OuterGymbal,InnerGymbal);
 	}
 }
