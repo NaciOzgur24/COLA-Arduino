@@ -88,7 +88,9 @@ void main() {
 	
     //GPS
     pinMode(13, OUTPUT); // Sets the digital pin 13 as output
-    
+    int armed = 1;
+    long altitude = 0;
+
     //PID
     double xdot = 0; // Velocity in the x axis (In practice theses are the velocities (either x or y) that the system derives from sensor data)
 	double ydot = 0; // Velocity in the y axis
@@ -109,12 +111,12 @@ void main() {
     double pi = 3.1415926535;
 
     double InnerGimbal = gimbal2servo(27.5, 37.9, 11.9, -37.65, -35, 10);
-	// Inner Gimbal Deflection of 10 degrees
-	cout << InnerGimbal << endl; // Inner Gimbal is Pitch
+	// Inner Gimbal Deflection of 10 degrees, Inner Gimbal is Pitch
+	//cout << InnerGimbal << endl;
 
 	double OuterGimbal = gimbal2servo(25.75, 36.3, 11.9, 36.2, -11, 10);
-	// Outer Gimbal Deflection of 10 degrees
-	cout << OuterGimbal << endl; // Outer Gimbal is Roll
+	// Outer Gimbal Deflection of 10 degrees, Outer Gimbal is Roll
+	//cout << OuterGimbal << endl;
 
     servo_x.attach(9); // attach the signal pin of servo to pin9 of arduino
 	servo_y.attach(10);
@@ -132,17 +134,14 @@ void main() {
 		gPitch = colaPIDp(); // Update the pitch gymbal angle
 
         //GPS
-        long altitude = gps_location(long altitude);
-        int armed = gps_location(int armed);
-        while (ignition_condition == 0 && armed == 1)
-        {
-            if (altitude <= 11000) // When COLA is 11 meters off the ground
-            {
-                digitalWrite(13, HIGH); // Sets the digital pin 13 on (Sends high Voltage to the igniter to light it)
-                delay(1000); // Waits 2 seconds after the high voltage is on
-                digitalWrite(13, LOW);  // Sets the digital pin 13 off (Turns off the high Voltage)
-                ignition_condition = 1;
-            }
+        altitude = gps_location(altitude);
+        //armed = gps_location(armed); // ???????
+        
+        if (altitude <= 11000 && ignition_condition == 0 && armed == 1) { // When COLA is 11 meters off the ground
+            digitalWrite(13, HIGH); // Sets the digital pin 13 on (Sends high Voltage to the igniter to light it)
+            delay(1000); // Waits 2 seconds after the high voltage is on
+            digitalWrite(13, LOW);  // Sets the digital pin 13 off (Turns off the high Voltage)
+            ignition_condition = 1;
         }
 
         //SERVO
