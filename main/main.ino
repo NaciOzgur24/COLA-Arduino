@@ -11,11 +11,9 @@ main code
 #include "Servo_Control.h"
 
 
-int flight_time = 1; //{s}
-
 void setup()
 {
-
+  int flight_time = 0; //{s}
 }
 
 void loop()
@@ -32,7 +30,6 @@ void loop()
 
 
     //Rocket Ignition Section
-
 
 
 
