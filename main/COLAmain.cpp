@@ -107,19 +107,18 @@ void main() {
 	myPIDp.SetMode(AUTOMATIC); // Start pitch PID
 
     //SERVO
-    using namespace std;
     double pi = 3.1415926535;
 
-    double InnerGimbal = gimbal2servo(27.5, 37.9, 11.9, -37.65, -35, 10);
+    // double InnerGimbal = gimbal2servo(27.5, 37.9, 11.9, -37.65, -35, 10);
 	// Inner Gimbal Deflection of 10 degrees, Inner Gimbal is Pitch
 	//cout << InnerGimbal << endl;
 
-	double OuterGimbal = gimbal2servo(25.75, 36.3, 11.9, 36.2, -11, 10);
+    // double OuterGimbal = gimbal2servo(25.75, 36.3, 11.9, 36.2, -11, 10);
 	// Outer Gimbal Deflection of 10 degrees, Outer Gimbal is Roll
 	//cout << OuterGimbal << endl;
 
     servo_x.attach(9); // attach the signal pin of servo to pin9 of arduino
-	servo_y.attach(10);
+    servo_y.attach(10);
 	
     /* 
 
@@ -129,9 +128,7 @@ void main() {
 
 	void loop() { // This code repeats until the arduino shuts off or explodes or something
 		
-        //PID
-        gRoll = colaPIDr(); // Update the roll gymbal angle
-		gPitch = colaPIDp(); // Update the pitch gymbal angle
+
 
         //GPS
         altitude = gps_location(altitude);
@@ -144,9 +141,13 @@ void main() {
             ignition_condition = 1;
         }
 
+        //PID
+        gRoll = colaPIDr(); // Update the roll gimbal angle
+	gPitch = colaPIDp(); // Update the pitch gimbal angle
+		
         //SERVO
         InnerGimbal = gimbal2servo(27.5, 37.9, 11.9, -37.65, -35, gPitch);
         OuterGimbal = gimbal2servo(25.75, 36.3, 11.9, 36.2, -11, gRoll);
-        processAccelGyro(OuterGymbal,InnerGymbal);
+        processAccelGyro(OuterGimbal,InnerGimbal);
 	}
 }
