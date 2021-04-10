@@ -56,6 +56,28 @@ double gimbal2servo(double l1, double l2, double l3, double pos1, double pos2, d
 	return servoangle;
 }
 
+void processAccelGyro()
+{
+
+	/*/ Get INT_STATUS byte
+	mpuIntStatus = mpu.getIntStatus();
+	// display Euler Angles in degrees
+	mpu.dmpGetQuaternion(&q, fifoBuffer);
+	mpu.dmpGetGravity(&gravity, &q);
+	mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
+	PIDYaw  = ypr[YAW] * 180 / M_PI;
+	PIDPitch = ypr[PITCH] * 180 / M_PI;
+	PIDRoll = ypr[ROLL] * 180 / M_PI;
+	*/
+
+	PIDPitch = colaPIDp();
+	PIDRoll = colaPIDr();
+
+	servo_x.write(-PIDPitch + 90);
+	servo_y.write(PIDRoll + 90);
+	delay(100);
+}
+
 
 /* 
 
@@ -94,6 +116,9 @@ void main() {
 	double OuterGimbal = gimbal2servo(25.75, 36.3, 11.9, 36.2, -11, 10);
 	// Outer Gimbal Deflection of 10 degrees
 	cout << OuterGimbal << endl; // Outer Gimbal is Roll
+
+    servo_x.attach(9); // attach the signal pin of servo to pin9 of arduino
+	servo_y.attach(10);
 	
     /* 
 
@@ -120,5 +145,8 @@ void main() {
                 ignition_condition = 1;
             }
         }
+
+        //SERVO
+        processAccelGyro();
 	}
 }
