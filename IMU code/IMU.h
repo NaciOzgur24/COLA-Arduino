@@ -24,12 +24,6 @@ void setup()
   SoftwareSerial mySerial(0, 1); // Rx, Tx
   //digitalWrite(13, LOW); // Low Voltage on Pin 13
   mySerial.begin(115200); // Initialize UART with baud rate of 115200 bps
-  
-  //pinMode(15, INPUT); // set push button pin as input
-  //pinMode(14, OUTPUT); // set LED pin as output
-  SoftwareSerial mySerial1(15, 14); // Rx, Tx
-  //digitalWrite(12, LOW); // Low Voltage on Pin 12
-  mySerial1.begin(115200); // Initialize UART with baud rate of 115200 bps
 }
 
 void loop()
