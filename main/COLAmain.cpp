@@ -44,6 +44,8 @@ double colaPIDp() { // Call this function every time you want the pitch PID to u
 }
 
 //SERVO
+double pi = 3.1415926535;
+
 double gimbal2servo(double l1, double l2, double l3, double pos1, double pos2, double g_theta) {
 	double point2x = cos((g_theta * (pi / 180)) - pi / 2) * l1;
 	double point2y = sin((g_theta * (pi / 180)) - pi / 2) * l1;
@@ -107,7 +109,6 @@ void main() {
 	myPIDp.SetMode(AUTOMATIC); // Start pitch PID
 
     //SERVO
-    double pi = 3.1415926535;
 
     // double InnerGimbal = gimbal2servo(27.5, 37.9, 11.9, -37.65, -35, 10);
 	// Inner Gimbal Deflection of 10 degrees, Inner Gimbal is Pitch
