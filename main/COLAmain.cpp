@@ -74,7 +74,6 @@ void processAccelGyro(double OuterGymbal,double InnerGymbal)
 
 	servo_x.write(-Innergymbal + 90);
 	servo_y.write(OuterGymbal + 90);
-	delay(100);
 }
 
 
