@@ -72,8 +72,6 @@ void processAccelGyro(double OuterGymbal,double InnerGymbal)
 	PIDRoll = ypr[ROLL] * 180 / M_PI;
 	*/
 
-
-
 	servo_x.write(-Innergymbal + 90);
 	servo_y.write(OuterGymbal + 90);
 	delay(100);
@@ -92,21 +90,33 @@ void main() {
     pinMode(13, OUTPUT); // Sets the digital pin 13 as output
     int armed = 1;
     long altitude = 0;
+    //Earth Radus correction 
+    double Re = 6378;                          //[Km] Equtorial Radius of Earth
+    double Rp = 6357;                          //[Km] Polar Radius of Earth
+    double R = (Re + Rp)/2;                    //[Km] Average Radius of Earth
+    //Starting Data
+    long lat1  = (pi/180) * 40.28888889;     //[~] Starting Latitude
+    long lon1  = (pi/180) * 117.6458333;     //[~] Starting Longitude
+    long elev1 = 0;                          //[m] Starting elevation in meters
+    long dt    = 0.01;                       //[s] Update speed of the GPS
+    //Variable initialization for loop code
+    long thetaA = 0, thetaE = 0, lat2 = 0, lon2 = 0, elev2 = 0, dlon = 0, dlat = 0, a = 0, c = 0, d = 0, x = 0, X = 0, Y = 0, Z = 0, Xdot = 0, Ydot = 0, Zdot = 0;
+    
 
     //PID
     double xdot = 0; // Velocity in the x axis (In practice theses are the velocities (either x or y) that the system derives from sensor data)
-	double ydot = 0; // Velocity in the y axis
-	double target = 0; // Desired velocity value, should always be zero
-	double Kp = 1.1; // Proportional gain
-	double Ki = 0.1; // Integral gain
-	double Kd = 0.5; // Derivative gain
-	double gRoll = 0; // Yaw gymbal angle (In practice these gymbal angle values should be fed into Brandon's conversion code to get a servo angle and then the servos should be driven to that angle)
-	double gPitch = 0; // Pitch gymbal angle
+    double ydot = 0; // Velocity in the y axis
+    double target = 0; // Desired velocity value, should always be zero
+    double Kp = 1.1; // Proportional gain
+    double Ki = 0.1; // Integral gain
+    double Kd = 0.5; // Derivative gain
+    double gRoll = 0; // Yaw gymbal angle (In practice these gymbal angle values should be fed into Brandon's conversion code to get a servo angle and then the servos should be driven to that angle)
+    double gPitch = 0; // Pitch gymbal angle
 	
-	PID myPIDr(xdot,gRoll,target,Kp,Ki,Kd,DIRECT); // Initialize roll PID
-	myPIDr.SetMode(AUTOMATIC); // Start roll PID
-	PID myPIDp(ydot,gPitch,target,Kp,Ki,Kd,DIRECT); // Initialize pitch PID
-	myPIDp.SetMode(AUTOMATIC); // Start pitch PID
+    PID myPIDr(xdot,gRoll,target,Kp,Ki,Kd,DIRECT); // Initialize roll PID
+    myPIDr.SetMode(AUTOMATIC); // Start roll PID
+    PID myPIDp(ydot,gPitch,target,Kp,Ki,Kd,DIRECT); // Initialize pitch PID
+    myPIDp.SetMode(AUTOMATIC); // Start pitch PID
 
     //SERVO
 
@@ -129,13 +139,39 @@ void main() {
 
 	void loop() { // This code repeats until the arduino shuts off or explodes or something
 		
-
-
         //GPS
-        altitude = gps_location(altitude);
+        //altitude = gps_location(altitude); ???????
         //armed = gps_location(armed); // ???????
+	//Current Position data
+	lat2  = (pi/180) * 34.28898889;     //[~] Current Latitude
+	lon2  = (pi/180) * 117.6468333;     //[~] Current Longitude
+	elev2 = 100;                        //[m] Current elevation in meters
+	//Distance math
+	dlon = lon2 - lon1;
+	dlat = lat2 - lat1;
+	a = (sin(dlat/2))^2 + (cos(lat1) * cos(lat2) * (sin(dlon/2))^2);
+	c = 2 * asin(min(1,sqrt(a)));
+	d = R * c * 1000;                   //[m] Lateral distance from stating pt
+	//Azimuth Math
+	x = acos( (sin(lat2) - sin(lat1)*cos(c) ) / (sin(c)*cos(lat1)) );
+	if sin(lon2-lon1) << 0 {
+	    thetaA = (180/pi) * x;
+	}
+	else if sin(lon2-lon1) >> 0 {
+	    thetaA = (180/pi) * (2*pi - x);     //[deg] CCW from due South
+	}
+	//Elevation Math
+	thetaE = (180/pi) * ((elev2-elev1) / (d) - (d/1000) / (2*R));          //[deg] Up from horizion
+	//Position and velocity out
+	X = d * cosd(thetaA - 90);               //[m] East distance from center
+	Y = d * sind(thetaA - 90);               //[m] South distance from center
+	Z = elev2 - elev1;                       //[m] AGL in meters
+	Xdot = X/dt;                             //[m/s] East velocity from center
+	Ydot = Y/dt;                             //[m/s] South velocity from center
+	Zdot = Z/dt;                             //[m/s] Vertical velocity 
         
-        if (altitude <= 11000 && ignition_condition == 0 && armed == 1) { // When COLA is 11 meters off the ground
+	//IGNITION
+        if (Z <= 11 && ignition_condition == 0 && armed == 1) { // When COLA is 11 meters off the ground
             digitalWrite(13, HIGH); // Sets the digital pin 13 on (Sends high Voltage to the igniter to light it)
             delay(1000); // Waits 2 seconds after the high voltage is on
             digitalWrite(13, LOW);  // Sets the digital pin 13 off (Turns off the high Voltage)
