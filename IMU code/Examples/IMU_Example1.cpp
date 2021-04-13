@@ -25,7 +25,8 @@ void setup()
   Wire.endTransmission();
   // Prepares the sensor to send data out
   Wire.beginTransmission(DUE_ADDRESS);
-  Wire.write(0x00); // (0x01) Reading tared orientation as Euler Angles
+  Wire.write(0x00); // (0x00) Reading Quaternion
+  // Wire.write(0x01); // (0x01) Reading tared orientation as Euler Angles
   Wire.endTransmission();
 
   // Request 4 bytes of data from the sensor

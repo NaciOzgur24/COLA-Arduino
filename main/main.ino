@@ -3,6 +3,7 @@ COLA Arduino
 main code
 */
 
+
 #include "GPS_I2C.h"
 #include "IMU.h"
 #include "Rocket_Ignition.h"
@@ -34,7 +35,7 @@ void loop()
   long altitude = gps_location(long altitude);
 
   //Rocket Ignition Section
-
+  
   //IMU Section
 
   //PID Section
