@@ -12,7 +12,8 @@ Servo code reading the PID outputs and controls it
 
 #include "Wire.h"
 #include <Servo.h>
-#include "Gimbal2Servo_2.cpp" // The Gimbal to Servo code ***Pretty sure we need to call a .h file instead of .cpp***
+#include "Gimbal2Servo_2.h"
+#include "COLAPID.cpp" // ***Prob need to change the COLAPID.cpp to a .h file***
 
 
 Servo servo_x; // Connect to the servo in x-axis
@@ -22,14 +23,12 @@ int angle = 0;
 int InnerGimbal = 0; // Inner Gimbal is Pitch
 int OuterGimbal = 0; // Outer Gimbal is Roll
 
-//float PIDYaw = 0;
 double PIDPitch = 0;
 double PIDRoll = 0;
 
-double ypr[2]; // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
+double pr[2]; // [pitch, roll]   pitch/roll container and gravity vector
 
 // relative ypr[x] usage based on sensor orientation when mounted, e.g. ypr[PITCH]
-//#define YAW   0     // defines the position within ypr[x] variable for YAW; may vary due to sensor orientation when mounted
 #define PITCH 0 // defines the position within ypr[x] variable for PITCH; may vary due to sensor orientation when mounted
 #define ROLL 1	// defines the position within ypr[x] variable for ROLL; may vary due to sensor orientation when mounted
 
@@ -71,9 +70,8 @@ void processAccelGyro()
 	PIDPitch = ypr[PITCH] * 180 / M_PI;
 	PIDRoll = ypr[ROLL] * 180 / M_PI;
 	*/
-
-	PIDPitch = colaPIDp();
-	PIDRoll = colaPIDr();
+	double PIDPitch = colaPIDp(double gPitch);
+	double PIDRoll = colaPIDr(double gRoll);
 
 	servo_x.write(-PIDPitch + 90);
 	servo_y.write(PIDRoll + 90);

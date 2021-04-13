@@ -7,13 +7,11 @@ main code
 #include "IMU.h"
 #include "Rocket_Ignition.h"
 #include "Data_Logging.h"
-#include "COLAPID.cpp" // ***Change***
+#include "COLAPID.cpp" // ***Prob need to Change***
 #include "Servo_Control.h"
-
 
 void setup()
 {
-  int flight_time = 0; //{s}
 }
 
 void loop()
@@ -27,30 +25,24 @@ void loop()
 
     //IMU Section
 
-
-
     //Rocket Ignition Section
-
-
 
     //Data Logging Section
 
-
-
     //COLA PID Section
-    double gRoll = colaPIDr(double gRoll); // Roll gymbal angle
-		double gPitch = colaPIDp(double gPitch); // Pitch gymbal angle
-
-
-
+    /*
+    double gRoll = colaPIDr(double gRoll);   // Roll gymbal angle
+    double gPitch = colaPIDp(double gPitch); // Pitch gymbal angle
+    */
+   
     //Servo Control Section
-    
 
-
-    //Duration of the flight
-    int flight_time += 5; // I think it would be 5 seconds if we are limited to 5Hz from our GPS sensor
+    //Exit Condition
+    int armed = gps_location(int armed);
+    if (altitude == 0 && armed == 2)
+    {
+      //while (1);
+      return 0;
+    }
   }
 }
-
-
-

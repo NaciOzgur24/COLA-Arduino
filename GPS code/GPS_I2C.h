@@ -5,25 +5,24 @@ COLA Arduino
 #ifndef GPS_I2C_h
 #define GPS_I2C_h
 
-#include <Wire.h> //Needed for I2C to GNSS
+#include <Wire.h> //I2C communication protocol
 #include <SparkFun_u-blox_GNSS_Arduino_Library.h>
 SFE_UBLOX_GNSS myGNSS;
 
-long lastTime = 0; // Simple local timer. Limits amount if I2C traffic to u-blox module.
-
+long lastTime = 0; //Simple local timer. Limits amount if I2C traffic to u-blox module.
+int armed = 0;
 
 void setup()
 {
   Serial.begin(115200);
   while (!Serial); //Wait for user to open terminal
-  pinMode(2, INPUT); // Digital sensor is on digital pin 2
-  Serial.println("SparkFun u-blox");
-
+  //pinMode(2, INPUT); //Digital sensor is on digital pin 2 ***IDK if I need to set a pin location to it***
+  Serial.println("Starting GPS Testing:");
   Wire.begin();
 
   if (myGNSS.begin() == false) //Connect to the u-blox module using Wire port
   {
-    Serial.println(F("u-blox GNSS not detected through I2C."));
+    Serial.println(F("GPS module not detected through I2C connection."));
     while (1);
   }
 
@@ -40,7 +39,7 @@ void loop()
     if (millis() - lastTime > 1000)
     {
       lastTime = millis(); //Update the timer
-      // *** Currently have it printing but NEED to change it after the testing phase ***
+      
       long latitude = myGNSS.getLatitude();
       Serial.print(latitude);
 
@@ -50,9 +49,14 @@ void loop()
       long altitude = myGNSS.getAltitude(); // {mm}
       Serial.print(altitude);
 
-      if (altitude >= 25000) //When COLA lander initially goes above 25 meters
+      if (altitude >= 20000) //When COLA lander initially goes above 20 meters
       {
         armed = 1;
+        //return armed;
+      }
+      if (armed == 1 && altitude == 0)
+      {
+        armed = 2; //After COLA goes up then comes back down to ground
         //return armed;
       }
     }
