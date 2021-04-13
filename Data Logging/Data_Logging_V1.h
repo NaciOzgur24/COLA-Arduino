@@ -9,12 +9,14 @@ Data Logging code (USB)
 #include <SoftwareSerial.h>
 #include "IMU.h"
 #include "GPS_I2C.h"
+#include "Rocket_Ignition.h"
 
 // I think portOne is for the IMU sensor
 SoftwareSerial portOne(0, 1); // Rx, Tx
 // The GPS sensor is a digital sensor on pin 2
 //pinMode(2, INPUT);
 SoftwareSerial portTwo(15, 14); // Rx, Tx
+SoftwareSerial portThree(17, 16); // Rx, Tx
 
 void setup()
 {
