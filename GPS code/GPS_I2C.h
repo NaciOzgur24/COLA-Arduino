@@ -16,7 +16,6 @@ void setup()
 {
   Serial.begin(115200);
   while (!Serial); //Wait for user to open terminal
-  //pinMode(2, INPUT); //Digital sensor is on digital pin 2 ***IDK if I need to set a pin location to it***
   Serial.println("Starting GPS Testing:");
   Wire.begin();
 
@@ -32,11 +31,11 @@ void setup()
 
 void loop()
 {
-  long gps_location(long latitude, long longitude, long altitude, int armed) // Maybe use ***byte*** instead of long
+  long gps_location(long latitude, long longitude, long altitude, int armed, int exit_armed)
   {
     //Query module only every second. Doing it more often will just cause I2C traffic.
     //The module only responds when a new position is available
-    if (millis() - lastTime > 1000)
+    if (millis() - lastTime > 25)
     {
       lastTime = millis(); //Update the timer
       
@@ -57,7 +56,7 @@ void loop()
       if (armed == 1 && altitude == 0) //When COLA lands
       {
         exit_armed = 2;
-        //return armed;
+        //return exit_armed;
       }
     }
   }
