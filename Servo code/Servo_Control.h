@@ -17,7 +17,7 @@ Servo code reading the PID outputs and controls it
 
 
 Servo servo_x; // Connect to the servo in x-axis
-Servo servo_y; // y-axis
+Servo servo_y;
 
 int angle = 0;
 int InnerGimbal = 0; // Inner Gimbal is Pitch
@@ -28,9 +28,9 @@ double PIDRoll = 0;
 
 double pr[2]; // [pitch, roll]   pitch/roll container and gravity vector
 
-// relative ypr[x] usage based on sensor orientation when mounted, e.g. ypr[PITCH]
-#define PITCH 0 // defines the position within ypr[x] variable for PITCH; may vary due to sensor orientation when mounted
-#define ROLL 1	// defines the position within ypr[x] variable for ROLL; may vary due to sensor orientation when mounted
+// relative pr[x] usage based on sensor orientation when mounted, e.g. pr[PITCH]
+#define PITCH 0 // defines the position within pr[x] variable for PITCH; may vary due to sensor orientation when mounted
+#define ROLL 1	// defines the position within pr[x] variable for ROLL; may vary due to sensor orientation when mounted
 
 void setup()
 {
@@ -40,7 +40,7 @@ void setup()
 	for (angle = -60; angle < 60; angle += 1) // command to move from -60 degrees to 60 degrees
 	{
 		servo_x.write(angle); // command to rotate the servo to the specified angle x-axis
-		servo_y.write(angle); // y-axis
+		servo_y.write(angle);
 		delay(500);
 	}
 	for (angle = 60; angle >= -60; angle -= 1) // command to move from 60 degrees to -60 degrees
@@ -49,6 +49,9 @@ void setup()
 		servo_y.write(angle); //command to rotate the servo to the specified angle
 		delay(500);
 	}
+	servo_x.write(0);
+	servo_y.write(0);
+	delay(500);
 }
 
 void loop()
@@ -58,25 +61,23 @@ void loop()
 
 void processAccelGyro()
 {
-
-	/*/ Get INT_STATUS byte
+	// Get INT_STATUS byte
 	mpuIntStatus = mpu.getIntStatus();
-	// display Euler Angles in degrees
+
+	// Display Euler Angles in degrees
 	mpu.dmpGetQuaternion(&q, fifoBuffer);
 	mpu.dmpGetGravity(&gravity, &q);
-	mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
+	mpu.dmpGetPitchRoll(pr, &q, &gravity);
 
-	PIDYaw  = ypr[YAW] * 180 / M_PI;
-	PIDPitch = ypr[PITCH] * 180 / M_PI;
-	PIDRoll = ypr[ROLL] * 180 / M_PI;
-	*/
+	PIDPitch = pr[PITCH] * 180 / M_PI;
+	PIDRoll = pr[ROLL] * 180 / M_PI;
+	
 	double PIDPitch = colaPIDp(double gPitch);
 	double PIDRoll = colaPIDr(double gRoll);
 
 	servo_x.write(-PIDPitch + 90);
 	servo_y.write(PIDRoll + 90);
-	delay(100);
+	delay(500);
 }
-
 
 #endif

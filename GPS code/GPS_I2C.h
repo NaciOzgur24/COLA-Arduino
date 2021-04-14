@@ -54,9 +54,9 @@ void loop()
         armed = 1;
         //return armed;
       }
-      if (armed == 1 && altitude == 0)
+      if (armed == 1 && altitude == 0) //When COLA lands
       {
-        armed = 2; //After COLA goes up then comes back down to ground
+        exit_armed = 2;
         //return armed;
       }
     }
