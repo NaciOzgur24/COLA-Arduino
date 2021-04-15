@@ -3,21 +3,23 @@ COLA Arduino
 Data Logging code (USB)
 */
 
-#ifndef Idea_3_h
-#define Idea_3_h
+#ifndef _DATALOGGER_h
+#define _DATALOGGER_h
 
 #include <SoftwareSerial.h>
+
 #include "IMU.h"
 #include "GPS_I2C.h"
+#include "Rocket_Ignition.h"
 
 
 void setup()
 {
   SoftwareSerial mySerial(15, 14); // Rx, Tx (GPS Sensor)
-  SoftwareSerial mySerial1(17, 16); // Rx, Tx (IMU Sensor)
+  //SoftwareSerial mySerial1(17, 16); // Rx, Tx (IMU Sensor)
 
   mySerial.begin(115200); // Initialize UART with baud rate of 115200 bps
-  mySerial1.begin(115200);
+  //mySerial1.begin(115200);
 }
 
 void loop()
@@ -35,13 +37,6 @@ void loop()
     long longitude = gps_location(long longitude);
     long altitude = gps_location(long altitude);
   }
-
-  if (mySerial1.available())
-  { //IMU Section
-    byte imu_data_rcvd = mySerial1.read();
-    mySerial1.write(imu_data_rcvd);
-  }
 }
 
-
-#endif
+#endif // _DATALOGGER_h

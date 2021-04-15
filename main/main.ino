@@ -1,21 +1,5 @@
 /*
-COLA Arduino
-main code
-*/
-
-#include "Wire.h"
-
-#include "GPS_I2C.h"
-/*
-#include "IMU.h"
-#include "Rocket_Ignition.h"
-#include "Data_Logging.h"
-#include "COLAPID.cpp" // ***Prob need to Change***
-#include "Gimbal2Servo.h"
-#include "Servo_Control.h"
-*/
-
-/*
+  COLA main code
   Serial Pins being used:
   IMU sensor: (0, 1) Rx, Tx
   Data Logging: (15, 14) Rx, Tx and *** MAYBE -> (17, 16) Rx, Tx ***
@@ -26,38 +10,43 @@ main code
   Servo 2 (y-dir): (10)
 */
 
+#include "Servo_Control.h"
+#include "GPS.h"
+#include "IMU.h"
+#include "Data_Logging.h"
+#include "Rocket_Ignition.h"
+
 void setup()
 {
+  gps_setup();
+  //Servo_setup();
+  //rocket_ignition_setup();
 }
 
 void loop()
 {
-  //GPS Section
-  long latitude = gps_location(long latitude);
-  long longitude = gps_location(long longitude);
-  long altitude = gps_location(long altitude);
+  // GPS Code
+  long latitude = gps_latitude();
+  long longitude = gps_longitude();
+  long altitude = gps_altitude();
 
-  Serial.print(altitude);
+  int altitude_condition = Ignition_Condition();
 
-  //Rocket Ignition Section
-  
-  //IMU Section
+  // IMU Code
 
-  //PID Section
-  //double gRoll = colaPIDr(double gRoll);   // Roll gymbal angle
-  //double gPitch = colaPIDp(double gPitch); // Pitch gymbal angle
+  // Servo Code
+  //Servo_Control();
 
-  //Gimbal/Servo Section
+  // Data Logging
 
-  //Data Logging Section
-
-  //Exit Condition
   /*
-  int exit_armed = gps_location(int exit_armed);
-  if (altitude == 0 && exit_armed == 2)
+  // Exit Condition
+  ignitor();
+  int armed = Ignition_Condition();
+  int exit_armed = Ignition_Condition();
+  if (exit_armed == 1 && altitude == 0)
   {
-    //while (1);
-    return 0;
+    while (1);
   }
   */
 }

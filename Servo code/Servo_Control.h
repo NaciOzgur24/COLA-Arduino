@@ -49,9 +49,6 @@ void setup()
 		servo_y.write(angle); //command to rotate the servo to the specified angle
 		delay(500);
 	}
-	servo_x.write(0);
-	servo_y.write(0);
-	delay(500);
 }
 
 void loop()
