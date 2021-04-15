@@ -1,30 +1,30 @@
 /*
-COLA Arduino
-IMU Code (Asynchronys Protocol)
+  COLA Arduino
+  IMU Code (Asynchronys Protocol)
+
+  116(0x74) Sets the axis directions for the IMU
+  231(0xe7) Set UART baud rate
+  232(0xe8) Get UART baud rate
+  237(0xed) Get serial number
 */
-
-// 116(0x74) Sets the axis directions for the IMU
-// 231(0xe7) Set UART baud rate
-// 232(0xe8) Get UART baud rate
-// 237(0xed) Get serial number
-
 
 #ifndef IMU_h
 #define IMU_h
+#define DUE_ADDRESS 0x46
 
 #include <Wire.h>
 #include <SoftwareSerial.h>
 
 
-void setup()
+void imu_setup()
 {
-  SoftwareSerial mySerial(0, 1); // Rx, Tx
-  //digitalWrite(13, LOW); // Low Voltage on Pin 13
+  SoftwareSerial.mySerial(0, 1); // Rx, Tx
   mySerial.begin(115200); // Initialize UART with baud rate of 115200 bps
 }
 
-void loop()
+void imu_loop()
 {
+  imu_data();
   if (mySerial.available())
   {
     for (int i = 0; i < 10; i++)
@@ -36,11 +36,14 @@ void loop()
   }
 }
 
-byte imu_data(byte clear_buffer, byte send_packet, byte Tared_Quaternion, byte status)
+
+
+byte imu_data()
 {
   // Clear the internal data buffer on the IMU
   byte clear_buffer = transferByte(0x01);
   mySerial.print("Cleared internal buffer. Result: "), mySerial.println(clear_buffer);
+  //return clear_buffer;
 
   // Send start of packet:
   byte send_packet = transferByte(0xF6);
@@ -48,16 +51,16 @@ byte imu_data(byte clear_buffer, byte send_packet, byte Tared_Quaternion, byte s
 
   // Send command (Tared Quaternion)
   byte Tared_Quaternion = transferByte(0x00);
-  mySerial.print("Send commmand 0x00. Result: "), mySerial.println(Tared_Quaternion);
+  mySerial.print("Quaternion: "), mySerial.println(Tared_Quaternion);
 
   // Get status of device:
   byte status = transferByte(0xFF);
-  mySerial.print("Status of device. Result: "), mySerial.println(status);
+  mySerial.print("Status of device: "), mySerial.println(status);
 
   while (status != 0x01)
   { // Repeat until device is Ready
     status = transferByte(0xFF);
-    mySerial.print("Status of device. Result: "), mySerial.println(status);
+    mySerial.print("Status of device: "), mySerial.println(status);
   }
 }
 

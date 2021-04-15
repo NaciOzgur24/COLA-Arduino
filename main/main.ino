@@ -2,12 +2,11 @@
   COLA main code
   Serial Pins being used:
   IMU sensor: (0, 1) Rx, Tx
-  Data Logging: (15, 14) Rx, Tx and *** MAYBE -> (17, 16) Rx, Tx ***
 
   Digital Pins being used:
-  GPS sensor: (2)
-  Servo 1 (x-dir): (9)
-  Servo 2 (y-dir): (10)
+  GPS sensor: (SCL SDA)
+  Servo_x: (9)
+  Servo_y: (10)
 */
 
 #include "Servo_Control.h"
@@ -29,20 +28,28 @@ void loop()
   long latitude = gps_latitude();
   long longitude = gps_longitude();
   long altitude = gps_altitude();
-
   int altitude_condition = Ignition_Condition();
 
+
   // IMU Code
+
 
   // Servo Code
   //Servo_Control();
 
+
+  // Rocket Ignition
+  //ignitor();
+
+
+  /*
   // Data Logging
+  long ignited_altitude = ignitor();
+  */
+
 
   /*
   // Exit Condition
-  ignitor();
-  int armed = Ignition_Condition();
   int exit_armed = Ignition_Condition();
   if (exit_armed == 1 && altitude == 0)
   {
