@@ -5,8 +5,8 @@
 
   Digital Pins being used:
   GPS sensor: (SCL SDA)
-  Servo_x: (9)
-  Servo_y: (10)
+  Servo_x: Pin 9
+  Servo_y: Pin 10
 */
 
 #include "Servo_Control.h"
