@@ -1,23 +1,27 @@
 /*
-  COLA Arduino
-  (GPS) Position & Velocity
+  COLA's (Test Plan) GPS code
+  Gets: Position and Velocity
+  Using: (I2C Protocol)
+  Pin (20, 21) (Rx, Tx)
 */
 
 #ifndef _GPS_h
 #define _GPS_h
 
-#include <Wire.h> //I2C communication protocol
+#include <Wire.h>
 #include <math.h>
-#include <SparkFun_u-blox_GNSS_Arduino_Library.h>
+
+#include <SparkFun_u-blox_GNSS_Arduino_Library.h> //Sparkfun's GPS Library
 SFE_UBLOX_GNSS myGNSS;
 
 long lastTime = 0; //Simple local timer. Limits amount if I2C traffic to u-blox module.
 long lastTime2 = 0;
 long lastTime3 = 0;
-long double latitude = 0;
+long double latitude = 0; // IDK why long double doesn't work ***NEED to figure that out since it stores more data and is more accurate than double***
 long double longitude = 0;
 int armed = 0;
 int exit_armed = 0;
+
 
 void gps_setup()
 {
@@ -88,12 +92,13 @@ long gps_altitude()
     return altitude;
   }
 }
+
 int Ignition_Condition()
 {
   long altitude_condition = gps_altitude();
   if (armed == 0 && altitude_condition >= 20000) // Once the COLA goes above 20 meters
   {
-    return armed += 1;
+    return armed = 1;
   }
   if (armed == 1 && altitude_condition == 0) //When COLA lands
   {

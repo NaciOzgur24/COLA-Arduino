@@ -6,14 +6,14 @@ Data Logging code (USB)
 #ifndef _DATALOGGER_h
 #define _DATALOGGER_h
 
-#include <SoftwareSerial.h>
+//#include <SoftwareSerial.h> ***NEED to figure out why I can't inculde this library***
 
 #include "IMU.h"
-#include "GPS_I2C.h"
+#include "GPS.h"
 #include "Rocket_Ignition.h"
 
 
-void setup()
+void Data_Logger_setup()
 {
   SoftwareSerial mySerial(15, 14); // Rx, Tx (GPS Sensor)
   //SoftwareSerial mySerial1(17, 16); // Rx, Tx (IMU Sensor)
@@ -22,7 +22,7 @@ void setup()
   //mySerial1.begin(115200);
 }
 
-void loop()
+void Data_Logger_loop()
 {
   for (int i = 0; i < 4; i++)
     {

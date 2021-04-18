@@ -1,6 +1,10 @@
 /*
-#ifndef PID_v1_h
-#define PID_v1_h
+  Arduino PID library
+  (***This code might have changed need to double check with Bennett***)
+*/
+
+#ifndef _PID_LIB_h
+#define _PID_LIB_h
 #define LIBRARY_VERSION  1.1.1
 
 class PID
@@ -86,5 +90,5 @@ class PID
   double outMin, outMax;
   bool inAuto, pOnE;
 };
-#endif
-*/
+
+#endif // _PID_LIB_h

@@ -1,12 +1,8 @@
-/*
-COLA Arduino
-Data Logging code (USB)
-*/
 
 #ifndef Data_Logging_V1_h
 #define Data_Logging_V1_h
 
-#include <SoftwareSerial.h>
+//#include <SoftwareSerial.h>
 #include "IMU.h"
 #include "GPS_I2C.h"
 #include "Rocket_Ignition.h"
@@ -62,3 +58,4 @@ void loop()
     Serial.println();
 }
 
+#endif // Data_Logging_V1_h

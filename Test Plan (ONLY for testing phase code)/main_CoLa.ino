@@ -1,47 +1,53 @@
 /*
-   Main code to for COLA
+  Main code to for COLA's (Test Plan) 
 */
 
-#include "Servo_Control.h"
 #include "GPS.h"
 #include "IMU.h"
-#include "Data_Logging.h"
+#include "Servo_Control.h"
 #include "Rocket_Ignition.h"
+#include "Data_Logging.h"
+//#include "COLAPID.h" Might not need to include this here
 
 void setup()
 {
   gps_setup();
-  //Servo_setup();
-  //rocket_ignition_setup();
+  //imu_setup(); ***Not done yet***
+  Servo_setup();
+  rocket_ignition_setup();
+  Data_Logger_setup();
 }
 
 void loop()
 {
-  // GPS Code
-  long latitude = gps_latitude();
-  long longitude = gps_longitude();
+  // GPS Section
+  double latitude = gps_latitude();
+  double longitude = gps_longitude();
   long altitude = gps_altitude();
 
-  int altitude_condition = Ignition_Condition();
-  
-  // IMU Code
 
+  // IMU Section
+  //imu_loop();
+  //byte quaternion = imu_quaternion();
   
-  // Servo Code
+  // Servo Section
   //Servo_Control();
 
 
-  // Data Logging
+  // Data Logging Section
+  //Data_Logger_gps();
+  //Data_Logger_Rocket_Ignition();
 
-  
+
+  // Rocket Ignition Section
+  //ignitor();
+
   /*
-  // Exit Condition
-  ignitor();
-  int armed = Ignition_Condition();
+  // Exit Condition Section
   int exit_armed = Ignition_Condition();
-  if (exit_armed == 1 && altitude == 0)
+  if (exit_armed == 1 && altitude <= 0)
   {
-    while (1);
+    while (1); //return 0; EXITs the code since COLA has landed. ???Move the Gimbal to a certain angle to prevent damage on the sensors???
   }
   */
 }
