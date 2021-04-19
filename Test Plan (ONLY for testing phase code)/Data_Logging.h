@@ -19,7 +19,7 @@ int landed_condition = 0; // Not Landed = 0. Landed = 1
 void Data_Logger_setup()
 {
     SoftwareSerial.mySerial(15, 14); // (Rx, Tx)
-    mySerial.begin(115200);          // Initialize UART with baud rate of 115200 bps
+    mySerial.begin(115200); // Initialize UART with baud rate of 115200 bps
 }
 
 void Data_Logger_gps()

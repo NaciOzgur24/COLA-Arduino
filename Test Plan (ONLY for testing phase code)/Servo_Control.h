@@ -32,22 +32,22 @@ void Servo_setup()
   //servo_y.write(center_position_y);
 }
 
-void Servo_Control()
+void Servo_Control(gPitch, gRoll)
 {
-  //double colaPIDr = colaPIDr(); // This variable comes from the PID controller
-  //double colaPIDp = colaPIDp();
+  //double gRoll = colaPIDr(); // This variable comes from the PID controller
+  //double gPitch = colaPIDp();
   
   // ***START*** ONLY use this portion of the code for the (Test Plan) phase. It won't work for the real landing!!!
   for (colaPIDr = 20; colaPIDr >= -20; colaPIDr -= 3)
   {
-    double servoangle_InnerGimbal_TestPlan = gimbal2servo(27.5, 37.9, 11.9, -37.65, -35, colaPIDr); // Inner Gimbal Deflection of 10 degrees {-20deg to 20deg}
+    double servoangle_InnerGimbal_TestPlan = gimbal2servo(27.5, 37.9, 11.9, -37.65, -35, gRoll); // Inner Gimbal Deflection of 10 degrees {-20deg to 20deg}
     servo_x.write(servoangle_InnerGimbal_TestPlan);
     delay(1000);
   }
   /*
   for (colaPIDp = 20; colaPIDp >= -20; colaPIDp -= 3)
   {
-    double servoangle_OuterGimbal_TestPlan = gimbal2servo(25.75, 36.3, 11.9, 36.2, -11, colaPIDp); // Outer Gimbal Deflection of 10 degrees {-20deg to 20deg}
+    double servoangle_OuterGimbal_TestPlan = gimbal2servo(25.75, 36.3, 11.9, 36.2, -11, gPitch); // Outer Gimbal Deflection of 10 degrees {-20deg to 20deg}
     servo_y.write(servoangle_OuterGimbal_TestPlan);
     delay(1000);
   }
