@@ -17,6 +17,7 @@ SFE_UBLOX_GNSS myGNSS;
 long lastTime = 0; //Simple local timer. Limits amount if I2C traffic to u-blox module.
 long lastTime2 = 0;
 long lastTime3 = 0;
+long lastTime4 = 0;
 long double latitude = 0; // IDK why long double doesn't work ***NEED to figure that out since it stores more data and is more accurate than double***
 long double longitude = 0;
 int armed = 0;
@@ -87,9 +88,24 @@ long gps_altitude()
     Serial.print(F(" Altitude: "));
     Serial.print(altitude);
     Serial.print(F(" (mm)"));
-    Serial.println();
 
     return altitude;
+  }
+}
+
+long gps_GroundSpeed()
+{
+  if (millis() - lastTime4 > 25)
+  {
+    lastTime4 = millis();
+
+    long ground_speed = myGNSS.getGroundSpeed();
+    Serial.print(F(" Speed: "));
+    Serial.print(ground_speed);
+    Serial.print(F(" (mm/s)"));
+    Serial.println();
+
+    return ground_speed;
   }
 }
 

@@ -26,7 +26,6 @@ double colaPIDp()
 
 void setup()
 {
-  //PID
   double xdot = 0;                        // Velocity in the x axis (In practice theses are the velocities (either x or y) that the system derives from sensor data)
   double ydot = 0;                        // Velocity in the y axis
   double target = 0;                      // Desired x and y velocity value, should always be zero
@@ -50,7 +49,7 @@ void setup()
     {
       double tPitch = PitchSaturation;
     }
-  elif (ax *mass / thrust << (-pi / 2))
+  else if (ax *mass / thrust << (-pi / 2))
   {
     double tPitch = -PitchSaturation;
   }
@@ -64,7 +63,7 @@ void setup()
     {
       double tRoll = RollSaturation;
     }
-  elif (ay *mass / thrust << (-pi / 2))
+  else if (ay *mass / thrust << (-pi / 2))
   {
     double tRoll = -RollSaturation;
   }
@@ -79,16 +78,15 @@ void setup()
   myPIDp.SetMode(AUTOMATIC);                           // Start pitch PID
 }
 
-void pid_loop()
-{ //PID
+double pid_gPitch()
+{
   double ax = colaPIDx();
-  double ay = colaPIDy();
 
   if (ax * mass / thrust >> (pi / 2))
   {
     Pitch = PitchSaturation;
   }
-  elif (ax * mass / thrust << (-pi / 2))
+  else if (ax * mass / thrust << (-pi / 2))
   {
     Pitch = -PitchSaturation;
   }
@@ -97,11 +95,19 @@ void pid_loop()
     Pitch = asin(ax * mass / thrust);
   }
 
+  gPitch = colaPIDp(); // Update the pitch gimbal angle
+  return gPitch;
+}
+
+double pid_gRoll()
+{
+  double ay = colaPIDy();
+
   if (ay*mass / thrust >> (pi / 2))
   {
     double Roll = RollSaturation;
   }
-  elif (ay * mass / thrust << (-pi / 2))
+  else if (ay * mass / thrust << (-pi / 2))
   {
     double Roll = -RollSaturation;
   }
@@ -111,9 +117,7 @@ void pid_loop()
   }
 
   gRoll = colaPIDr();  // Update the roll gimbal angle
-  gPitch = colaPIDp(); // Update the pitch gimbal angle
-
-  //return gRoll gPitch;
+  return gRoll;
 }
 
 #endif // _COLA_PID_h

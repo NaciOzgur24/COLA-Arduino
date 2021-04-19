@@ -24,7 +24,7 @@ void loop()
   double latitude = gps_latitude();
   double longitude = gps_longitude();
   long altitude = gps_altitude();
-
+  long ground_speed = gps_GroundSpeed();
 
   // IMU Section
   //imu_loop();

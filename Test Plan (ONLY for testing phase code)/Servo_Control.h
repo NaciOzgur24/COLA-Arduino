@@ -34,10 +34,7 @@ void Servo_setup()
 }
 
 void Servo_Control() // void Servo_Control(gPitch, gRoll)
-{
-  //double gRoll = colaPIDr(); // This variable comes from the PID controller
-  //double gPitch = colaPIDp();
-  
+{  
   // ***START*** ONLY use this portion of the code for the (Test Plan) phase. It won't work for the real landing!!!
   for (colaPIDr = 20; colaPIDr >= -20; colaPIDr -= 3)
   {
@@ -56,6 +53,9 @@ void Servo_Control() // void Servo_Control(gPitch, gRoll)
   
 
   /* // ***START*** ONLY use this portion of the code for the (Actual Landing). It won't work for the (Test Plan)
+  double gPitch = pid_gPitch();
+  double gRoll = pid_gRoll();
+
   double servoangle_InnerGimbal = gimbal2servo(27.5, 37.9, 11.9, -37.65, -35, gRoll);
   servo_x.write(servoangle_InnerGimbal);
   double servoangle_OuterGimbal = gimbal2servo(25.75, 36.3, 11.9, 36.2, -11, gPitch);
