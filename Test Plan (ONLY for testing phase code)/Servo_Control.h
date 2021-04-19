@@ -12,7 +12,6 @@
 
 #include <Wire.h>
 #include <Servo.h>
-#include <stdio.h>
 
 #include "Gimbal2Servo.h"
 #include "COLAPID.h"
