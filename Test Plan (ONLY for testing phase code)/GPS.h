@@ -57,7 +57,7 @@ double gps_latitude()
     Serial.print(corrected_latitude);
     Serial.print(F(" (Degrees)"));
 
-    return corrected_latitude; // [i]
+    return corrected_latitude;
   }
 }
 

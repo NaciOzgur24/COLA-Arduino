@@ -40,14 +40,14 @@ void Servo_Control(gPitch, gRoll)
   // ***START*** ONLY use this portion of the code for the (Test Plan) phase. It won't work for the real landing!!!
   for (colaPIDr = 20; colaPIDr >= -20; colaPIDr -= 3)
   {
-    double servoangle_InnerGimbal_TestPlan = gimbal2servo(27.5, 37.9, 11.9, -37.65, -35, gRoll); // Inner Gimbal Deflection of 10 degrees {-20deg to 20deg}
+    double servoangle_InnerGimbal_TestPlan = gimbal2servo(27.5, 37.9, 11.9, -37.65, -35, colaPIDr); // Inner Gimbal Deflection of 10 degrees {-20deg to 20deg}
     servo_x.write(servoangle_InnerGimbal_TestPlan);
     delay(1000);
   }
   /*
   for (colaPIDp = 20; colaPIDp >= -20; colaPIDp -= 3)
   {
-    double servoangle_OuterGimbal_TestPlan = gimbal2servo(25.75, 36.3, 11.9, 36.2, -11, gPitch); // Outer Gimbal Deflection of 10 degrees {-20deg to 20deg}
+    double servoangle_OuterGimbal_TestPlan = gimbal2servo(25.75, 36.3, 11.9, 36.2, -11, colaPIDp); // Outer Gimbal Deflection of 10 degrees {-20deg to 20deg}
     servo_y.write(servoangle_OuterGimbal_TestPlan);
     delay(1000);
   }
@@ -55,9 +55,9 @@ void Servo_Control(gPitch, gRoll)
   
 
   /* // ***START*** ONLY use this portion of the code for the (Actual Landing). It won't work for the (Test Plan)
-  double servoangle_InnerGimbal = gimbal2servo(27.5, 37.9, 11.9, -37.65, -35, colaPIDr);
+  double servoangle_InnerGimbal = gimbal2servo(27.5, 37.9, 11.9, -37.65, -35, gRoll);
   servo_x.write(servoangle_InnerGimbal);
-  double servoangle_OuterGimbal = gimbal2servo(25.75, 36.3, 11.9, 36.2, -11, colaPIDp);
+  double servoangle_OuterGimbal = gimbal2servo(25.75, 36.3, 11.9, 36.2, -11, gPitch);
   servo_y.write(servoangle_OuterGimbal);
   delay(15); // IDK how fast the PID controller will spit out an angle ***NEED to ask Bennett***
   */ // ***END*** Actual Landing code

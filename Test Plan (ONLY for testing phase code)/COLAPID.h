@@ -92,7 +92,7 @@ void pid_loop()
   double ax = colaPIDx();
   double ay = colaPIDy();
 
-  if (ax *mass / thrust >> (pi / 2))
+  if (ax * mass / thrust >> (pi / 2))
   {
     Pitch = PitchSaturation;
   }
@@ -121,8 +121,7 @@ void pid_loop()
   gRoll = colaPIDr();  // Update the roll gimbal angle
   gPitch = colaPIDp(); // Update the pitch gimbal angle
 
-  return gRoll gPitch;
+  //return gRoll gPitch;
 }
-
 
 #endif // _COLA_PID_h

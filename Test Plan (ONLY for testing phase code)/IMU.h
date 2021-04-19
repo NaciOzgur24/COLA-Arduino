@@ -59,8 +59,7 @@ byte imu_data()
 }
 
 byte imu_quaternion();
-{
-    // Send command (Tared Quaternion)
+{   // Send command (Tared Quaternion)
     byte Tared_Quaternion = transferByte(0x00);
     mySerial.print("Quaternion: "), mySerial.println(Tared_Quaternion);
     return Tared_Quaternion;

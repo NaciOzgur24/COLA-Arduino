@@ -24,7 +24,7 @@ int ignitor()
     if (armed == 1 && altitude_at_ignition <= 11000) // When COLA is 11 meters off the ground
     {   //NEED 12 Volts
         digitalWrite(7, HIGH); // Sets the digital pin 7 on (Sends high Voltage to the igniter to light it)
-        delay(1000);            // Waits 1 seconds after the high voltage is on
+        delay(1000);           // Waits 1 seconds after the high voltage is on
         digitalWrite(7, LOW);  // Sets the digital pin 7 off (Turns off the high Voltage)
         return altitude_at_ignition;
     }

@@ -22,7 +22,7 @@ void Data_Logger_setup()
     mySerial.begin(115200); // Initialize UART with baud rate of 115200 bps
 }
 
-void Data_Logger_gps()
+double Data_Logger_gps()
 {
     if (mySerial.available() > 0) // if (mySerial.available() && altitude <= 0) would stop storing data once its landed
     {
@@ -40,8 +40,7 @@ void Data_Logger_gps()
     }
 }
 
-/* ???DO WE EVEN NEED TO LOG IMU DATA???
-void Data_Logger_imu()
+byte Data_Logger_imu()
 {
     if (mySerial.available() > 0)
     {
@@ -50,9 +49,8 @@ void Data_Logger_imu()
         mySerial.write(imu_quaternion_data_rcvd);
     }
 }
-*/
 
-void Data_Logger_Rocket_Ignition()
+int Data_Logger_Rocket_Ignition()
 {
     if (mySerial.available() > 0 && landed_condition == 0)
     {
