@@ -51,7 +51,7 @@ double gps_latitude()
   {
     lastTime = millis(); //Update the timer
 
-    latitude = myGNSS.getLatitude();
+    double latitude = myGNSS.getLatitude();
     Serial.print(F(" Latitude: "));
     double corrected_latitude = latitude / (10000000);
     Serial.print(corrected_latitude);
@@ -67,7 +67,7 @@ double gps_longitude()
   {
     lastTime2 = millis();
 
-    longitude = myGNSS.getLongitude();
+    double longitude = myGNSS.getLongitude();
     Serial.print(F(" Longitude: "));
     double corrected_longitude = longitude / (10000000);
     Serial.print(corrected_longitude);

@@ -12,9 +12,10 @@
 
 #include <Wire.h>
 #include <Servo.h>
+#include <stdio.h>
 
 #include "Gimbal2Servo.h"
-//#include "COLAPID.h"
+#include "COLAPID.h"
 
 Servo servo_x;
 //Servo servo_y;
@@ -32,7 +33,7 @@ void Servo_setup()
   //servo_y.write(center_position_y);
 }
 
-void Servo_Control(gPitch, gRoll)
+void Servo_Control() // void Servo_Control(gPitch, gRoll)
 {
   //double gRoll = colaPIDr(); // This variable comes from the PID controller
   //double gPitch = colaPIDp();

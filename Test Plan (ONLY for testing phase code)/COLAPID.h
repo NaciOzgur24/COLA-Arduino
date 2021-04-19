@@ -5,19 +5,11 @@
 #ifndef _COLA_PID_h
 #define _COLA_PID_h
 
-// Will include once updated
-//PID
+#include <stdio.h>
+
 #include "PID_v1.h" // This code uses the Arduino PID library. Let's not re-invent the wheel, eh?
+#include "GPS.h"
 
-//GPS
-#include "GPS.h" // Gets the Altitude from the GPS sensor ***Still NEED to change from .ino file to either .cpp or .h***
-
-//SERVO
-//#include "pch.h"
-
-/* 
-  FUNCTIONS
-*/
 
 //PID
 double colaPIDr()

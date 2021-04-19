@@ -7,15 +7,15 @@
 #include "Servo_Control.h"
 #include "Rocket_Ignition.h"
 #include "Data_Logging.h"
-//#include "COLAPID.h" Might not need to include this here
+#include "COLAPID.h" //Might not need to include it here
 
 void setup()
 {
   gps_setup();
   //imu_setup(); ***Not done yet***
-  Servo_setup();
-  rocket_ignition_setup();
-  Data_Logger_setup();
+  //Servo_setup();
+  //rocket_ignition_setup();
+  //Data_Logger_setup();
 }
 
 void loop()
@@ -30,8 +30,10 @@ void loop()
   //imu_loop();
   //byte quaternion = imu_quaternion();
   
+
   // PID
   //pid_loop();
+
 
   // Servo Section
   //Servo_Control();

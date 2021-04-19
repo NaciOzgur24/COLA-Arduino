@@ -1,3 +1,6 @@
+#ifndef _VELOCITY_H
+#define _VELOCITY_H
+
 #include "GPS.h"
 
 
@@ -8,9 +11,6 @@ void setup()
 	long lat1 = (pi / 180) * BLABLA; //[~] Starting Latitude
 	long lon1 = (pi / 180) * BLABLA; //[~] Starting Longitude
 	long elev1 = 0;					 //[m] Starting elevation in meters
-
-	
-
 }
 
 void loop()
@@ -62,12 +62,7 @@ double lat_to_x(latitude)
 	double longitude_last = gps_longitude();
 	long altitude_last = gps_altitude();
 
+	//return Xdot Ydot Zdot;
 }
 
-
-
-
-
-
-
-//return Xdot Ydot Zdot;
+#endif // _VELOCITY_H
