@@ -18,6 +18,7 @@ long lastTime = 0; //Simple local timer. Limits amount if I2C traffic to u-blox 
 long lastTime2 = 0;
 long lastTime3 = 0;
 long lastTime4 = 0;
+long lastTime5 = 0;
 long double latitude = 0; // IDK why long double doesn't work ***NEED to figure that out since it stores more data and is more accurate than double***
 long double longitude = 0;
 int armed = 0;
@@ -93,19 +94,43 @@ long gps_altitude()
   }
 }
 
-long gps_GroundSpeed()
+long gps_GroundSpeed_x()
 {
   if (millis() - lastTime4 > 25)
   {
     lastTime4 = millis();
 
-    long ground_speed = myGNSS.getGroundSpeed();
+    long heading_x = myGNSS.getHeading();
+    long corrected_heading_x = heading_x / (100000);
+
+    long ground_speed_x = myGNSS.getGroundSpeed();
+    long corrected_ground_speed_x = ground_speed_x * cos(corrected_heading_x); // In degrees???
+
     Serial.print(F(" Speed: "));
-    Serial.print(ground_speed);
+    Serial.print(corrected_ground_speed_x);
+    Serial.print(F(" (mm/s)"));
+
+    return corrected_ground_speed_x;
+  }
+}
+
+long gps_GroundSpeed_y()
+{
+  if (millis() - lastTime5 > 25)
+  {
+    lastTime5 = millis();
+    long heading_y = myGNSS.getHeading();
+    long corrected_heading_y = heading_y / (100000);
+
+    long ground_speed_y = myGNSS.getGroundSpeed();
+    long corrected_ground_speed_y = ground_speed_y * sin(corrected_heading_y); // In degrees???
+
+    Serial.print(F(" Speed: "));
+    Serial.print(corrected_ground_speed_y);
     Serial.print(F(" (mm/s)"));
     Serial.println();
 
-    return ground_speed;
+    return corrected_ground_speed_y;
   }
 }
 
