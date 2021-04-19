@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 
-#include "PID_v1.h" // This code uses the Arduino PID library. Let's not re-invent the wheel, eh?
+#include "PID_v1.h"
 #include "GPS.h"
 
 
@@ -24,7 +24,7 @@ double colaPIDp()
   return gPitch     // The function returns the pitch gymbal angle.
 }
 
-void setup()
+void pid_setup()
 {
   double xdot = 0;                        // Velocity in the x axis (In practice theses are the velocities (either x or y) that the system derives from sensor data)
   double ydot = 0;                        // Velocity in the y axis
