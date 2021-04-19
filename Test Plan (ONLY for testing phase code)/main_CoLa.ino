@@ -32,7 +32,6 @@ void loop()
   
 
   // PID
-  //pid_loop();
 
 
   // Servo Section

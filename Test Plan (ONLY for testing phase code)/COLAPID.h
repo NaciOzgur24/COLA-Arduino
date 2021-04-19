@@ -44,11 +44,10 @@ void setup()
   PID myPIDy(ydot, ay, target, Kp, Ki, Kd, DIRECT); // Initialize y-accel PID
   myPIDy.SetMode(AUTOMATIC);                        // Start pitch PID
 
-  if (ax)
-    *mass / thrust >> (pi / 2)
-    {
-      double tPitch = PitchSaturation;
-    }
+  if (ax)*mass / thrust >> (pi / 2)
+  {
+    double tPitch = PitchSaturation;
+  }
   else if (ax *mass / thrust << (-pi / 2))
   {
     double tPitch = -PitchSaturation;
@@ -58,11 +57,10 @@ void setup()
     double tPitch = asin(ax * mass / thrust);
   }
 
-  if (ay)
-    *mass / thrust >> (pi / 2)
-    {
-      double tRoll = RollSaturation;
-    }
+  if (ay)*mass / thrust >> (pi / 2)
+  {
+    double tRoll = RollSaturation;
+  }
   else if (ay *mass / thrust << (-pi / 2))
   {
     double tRoll = -RollSaturation;
