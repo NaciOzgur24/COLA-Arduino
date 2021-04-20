@@ -21,8 +21,6 @@ long lastTime2 = 0;
 long lastTime3 = 0;
 long lastTime4 = 0;
 long lastTime5 = 0;
-long double latitude = 0; // IDK why long double doesn't work ***NEED to figure that out since it stores more data and is more accurate than double***
-long double longitude = 0;
 int armed = 0;
 int exit_armed = 0;
 
