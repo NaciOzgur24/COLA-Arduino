@@ -14,12 +14,15 @@
 #include "IMU.h"
 #include "Rocket_Ignition.h"
 
-int landed_condition = 0; // Not Landed = 0. Landed = 1
+int landed_condition = 0;
 
 void Data_Logger_setup()
 {
     SoftwareSerial.mySerial(15, 14); // (Rx, Tx)
     mySerial.begin(115200); // Initialize UART with baud rate of 115200 bps
+    pinMode(0, INPUT);
+    pinMode(1, OUTPUT);
+    pinMode(10, OUTPUT);
 }
 
 double Data_Logger_gps()
