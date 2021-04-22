@@ -11,7 +11,7 @@
 
 void setup()
 {
-  gps_setup();
+  //gps_setup();
   //imu_setup(); ***Not done yet***
   //pid_setup();
   //Servo_setup();
@@ -22,10 +22,10 @@ void setup()
 void loop()
 {
   // GPS Section
-  double latitude = gps_latitude();
-  double longitude = gps_longitude();
-  long altitude = gps_altitude();
-  long ground_speed = gps_GroundSpeed();
+  //double latitude = gps_latitude();
+  //double longitude = gps_longitude();
+  //long altitude = gps_altitude();
+  //long ground_speed = gps_GroundSpeed();
 
   // IMU Section
   //imu_loop();
@@ -40,8 +40,6 @@ void loop()
 
 
   // Data Logging Section
-  //Data_Logger_gps();
-  //Data_Logger_Rocket_Ignition();
 
 
   // Rocket Ignition Section
