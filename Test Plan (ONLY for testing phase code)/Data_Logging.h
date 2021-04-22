@@ -1,67 +1,85 @@
 /*
-    COLA's Data Logging code
-    Using: (USB so maybe (I2C)??? Protocol)
-    Pin (15, 14) (Rx, Tx)
-*/
+    COLA IMU gets Euler Angles
 
-#ifndef _DATALOGGER_h
-#define _DATALOGGER_h
+    //Euler data registers
+        #define BNO055_EUL_HEADING_LSB_ADDR			0X1A
+        #define BNO055_EUL_HEADING_MSB_ADDR			0X1B
+
+        #define BNO055_EUL_ROLL_LSB_ADDR			0X1C
+        #define BNO055_EUL_ROLL_MSB_ADDR			0X1D
+
+        #define BNO055_EUL_PITCH_LSB_ADDR			0X1E
+        #define BNO055_EUL_PITCH_MSB_ADDR			0X1F
+
+    //Quaternion data registers
+        #define BNO055_QUA_DATA_W_LSB_ADDR			0X20
+        #define BNO055_QUA_DATA_W_MSB_ADDR			0X21
+        #define BNO055_QUA_DATA_X_LSB_ADDR			0X22
+        #define BNO055_QUA_DATA_X_MSB_ADDR			0X23
+        #define BNO055_QUA_DATA_Y_LSB_ADDR			0X24
+        #define BNO055_QUA_DATA_Y_MSB_ADDR			0X25
+        #define BNO055_QUA_DATA_Z_LSB_ADDR			0X26
+        #define BNO055_QUA_DATA_Z_MSB_ADDR			0X27
+*/
+//Adafruit_BNO055 bno = Adafruit_BNO055(55,0x29);
+
+#ifndef _BNO055_EULER_ANGLES_H
+#define _BNO055_EULER_ANGLES_H
 
 #include <Wire.h>
-//#include <SoftwareSerial.h> IDK why it doesn't add this library correctly
+#include "BNO055_support.h"		//Contains the bridge code between the API and Arduino
 
-#include "GPS.h"
-#include "IMU.h"
-#include "Rocket_Ignition.h"
+//The device address is set to BNO055_I2C_ADDR2 in this example. You can change this in the BNO055.h file in the code segment shown below.
+// /* BNO055 I2C Address */
+// #define BNO055_I2C_ADDR1                0x28
+// #define BNO055_I2C_ADDR2                0x29
+// #define BNO055_I2C_ADDR                 BNO055_I2C_ADDR2
 
-int landed_condition = 0;
+//Pin assignments as tested on the Arduino Due.
+//Vdd,Vddio : 3.3V
+//GND : GND
+//SDA/SCL : SDA/SCL
+//PSO/PS1 : GND/GND (I2C mode)
 
-void Data_Logger_setup()
+struct bno055_t myBNO; //This structure contains the details of the BNO055 device that is connected. (Updated after initialization)
+struct bno055_euler myEulerData; //Structure to hold the Euler data
+
+unsigned long lastTime = 0;
+
+void setup()
 {
-    SoftwareSerial.mySerial(15, 14); // (Rx, Tx)
-    mySerial.begin(115200); // Initialize UART with baud rate of 115200 bps
-    pinMode(0, INPUT);
-    pinMode(1, OUTPUT);
-    pinMode(10, OUTPUT);
+  Wire.begin(); //I2C communication
+
+  BNO_Init(&myBNO); //(Initialization of the BNO055) Assigning the structure to hold information about the device
+  
+  bno055_set_operation_mode(OPERATION_MODE_NDOF); //Configuration to NDoF mode
+  delay(1);
+
+  Serial.begin(115200);
 }
 
-double Data_Logger_gps()
+void loop()
 {
-    if (mySerial.available() > 0) // if (mySerial.available() && altitude <= 0) would stop storing data once its landed
-    {
-        double latitude = gps_latitude();
-        double gps_data_latitude_rcvd = mySerial.read(); // Read double from serial buffer and save to gps_data_latitude_rcvd
-        mySerial.write(gps_data_latitude_rcvd);
+  if ((millis() - lastTime) >= 100) //To stream at 10 Hz without using additional timers
+  {
+    lastTime = millis();
 
-        double longitude = gps_longitude();
-        double gps_data_longitude_rcvd = mySerial.read();
-        mySerial.write(gps_data_longitude_rcvd);
+    bno055_read_euler_hrp(&myEulerData);			//Update Euler data into the structure
 
-        long altitude = gps_altitude();
-        long gps_data_altitude_rcvd = mySerial.read();
-        mySerial.write(gps_data_altitude_rcvd);
-    }
+    Serial.print("Time Stamp: ");				//To read out the Time Stamp
+    Serial.println(lastTime);
+
+    Serial.print("Heading(Yaw): ");				//To read out the Heading (Yaw)
+    Serial.println(float(myEulerData.h) / 16.00);		//Convert to degrees
+
+    Serial.print("Roll: ");					//To read out the Roll
+    Serial.println(float(myEulerData.r) / 16.00);		//Convert to degrees
+
+    Serial.print("Pitch: ");				//To read out the Pitch
+    Serial.println(float(myEulerData.p) / 16.00);		//Convert to degrees
+
+    Serial.println();
+  }
 }
 
-byte Data_Logger_imu()
-{
-    if (mySerial.available() > 0)
-    {
-        byte quaternion = imu_quaternion();
-        byte imu_quaternion_data_rcvd = mySerial.read();
-        mySerial.write(imu_quaternion_data_rcvd);
-    }
-}
-
-int Data_Logger_Rocket_Ignition()
-{
-    if (mySerial.available() > 0 && landed_condition == 0)
-    {
-        long altitude_at_ignition = ignitor();
-        int rocket_ignition_data_rcvd = mySerial.read(); // Might need to use Wire.read() instead since we have multiple data being stored
-        mySerial.write(rocket_ignition_data_rcvd);
-        landed_condition += 1;
-    }
-}
-
-#endif // _DATALOGGER_h
+#endif // _BNO055_EULER_ANGLES_H
