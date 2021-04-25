@@ -44,7 +44,7 @@
 struct bno055_t myBNO; //This structure contains the details of the BNO055 device that is connected. (Updated after initialization)
 struct bno055_euler myEulerData; //Structure to hold the Euler data
 
-unsigned long lastTime = 0;
+long lastTime_imu2 = 0;
 
 void setup()
 {
@@ -58,16 +58,16 @@ void setup()
   Serial.begin(115200);
 }
 
-void loop()
+void imu_Euler_Angles_loop()
 {
-  if ((millis() - lastTime) >= 100) //To stream at 10 Hz without using additional timers
+  if ((millis() - lastTime_imu2) >= 100) //To stream at 10 Hz without using additional timers
   {
-    lastTime = millis();
+    lastTime_imu2 = millis();
 
     bno055_read_euler_hrp(&myEulerData);			//Update Euler data into the structure
 
     Serial.print("Time Stamp: ");				//To read out the Time Stamp
-    Serial.println(lastTime);
+    Serial.println(lastTime_imu2);
 
     Serial.print("Heading(Yaw): ");				//To read out the Heading (Yaw)
     Serial.println(float(myEulerData.h) / 16.00);		//Convert to degrees
