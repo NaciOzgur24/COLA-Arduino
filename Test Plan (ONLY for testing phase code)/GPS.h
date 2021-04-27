@@ -3,8 +3,6 @@
   Gets: Position and Velocity
   Using: (I2C Protocol)
   Pin (20, 21) (Rx, Tx)
-  https://www.arduino.cc/reference/en/libraries/rtclib/
-  https://www.arduinolibraries.info/libraries/rt-clib
 */
 
 #ifndef _GPS_h
